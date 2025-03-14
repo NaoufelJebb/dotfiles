@@ -222,12 +222,6 @@ Delete intermediate buffers when navigating through dired.
 
 #+END_SRC
 
-** Ivy Postframe:
-#+BEGIN_SRC emacs-lisp
-  (require 'ivy-posframe
-  (ivy-posframe-mode 1))
-#+END_SRC
-
 * Third-party packages
 ** GUI enhancements
 *** Color Theme

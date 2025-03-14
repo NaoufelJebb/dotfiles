@@ -7,6 +7,7 @@ vim.opt.number = true
 
 vim.opt.title = true
 vim.opt.autoindent = true
+vim.opt.undofile = false
 vim.opt.smartindent = true
 vim.opt.hlsearch = true
 vim.opt.backup = false

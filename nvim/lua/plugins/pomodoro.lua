@@ -21,9 +21,10 @@ return {
     }, -- See below for full list of options 👇
   },
   keys = {
-    { "<leader>t", "", desc = "Pomodoro" },
-    { "<leader>ts", ":TimerStart 50m<cr>", desc = "Start a new timer" },
-    { "<leader>th", ":TimerHide<cr>", desc = "Hide the notifiers of a running timer" },
-    { "<leader>tS", ":TimerSession<cr>", desc = "Start a predefined Pomodoro session" },
+    { "<leader>tp", "", desc = "Pomodoro" },
+    { "<leader>tps", ":TimerStart 50m<cr>", desc = "Start a new timer" },
+    { "<leader>tpd", ":TimerStop", desc = "Stop current running timer" },
+    { "<leader>tph", ":TimerHide<cr>", desc = "Hide the notifiers of a running timer" },
+    { "<leader>tpS", ":TimerSession<cr>", desc = "Start a predefined Pomodoro session" },
   },
 }
