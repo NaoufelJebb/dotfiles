@@ -6,3 +6,5 @@ brew install minikube
 brew install dockerfile-language-server
 brew install alesbrelih/gitlab-ci-ls/gitlab-ci-ls
 brew install python-lsp-server
+brew install tnk-studio/tools/lazykube
+brew install lazydocker
