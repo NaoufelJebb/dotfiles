@@ -11,25 +11,125 @@ vim.opt_local.expandtab = true -- Expand tab to 2 spaces
 -- vim.opt_local.foldlevel = 1
 
 -- LSP Configuration
-require("lspconfig").yamlls.setup({
+vim.lsp.config("yamlls", {
   settings = {
     yaml = {
+      completion = true,
+      validate = true,
+      format = { enable = true },
+      hover = true,
+      schemaStore = {
+        enable = true,
+        url = "https://www.schemastore.org/api/json/catalog.json",
+      },
+      schemaDownload = { enable = true },
       schemas = {
-        kubernetes = "*.yaml",
-        ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-        ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-        ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
-        ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-        ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-        ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-        ["http://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
-        ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci.{yml,yaml}",
+        -- Kubernetes
+        kubernetes = {
+          "k8s/**/*.yml",
+          "k8s/**/*.yaml",
+          "manifests/**/*.yml",
+          "manifests/**/*.yaml",
+          "deploy/**/*.yml",
+          "deploy/**/*.yaml",
+          "templates/**/*.yaml",
+          "templates/**/*.yml",
+          "helm/**/*.yaml",
+          "helm/**/*.yml",
+        },
+
+        -- Docker Compose / Compose Spec
+        ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
+          "docker-compose.yml",
+          "docker-compose.yaml",
+          "compose.yml",
+          "compose.yaml",
+          "**/docker-compose.yml",
+          "**/docker-compose.yaml",
+          "**/compose.yml",
+          "**/compose.yaml",
+        },
+        ["https://json.schemastore.org/github-workflow.json"] = {
+          ".github/workflows/*.yml",
+          ".github/workflows/*.yaml",
+          "**/.github/workflows/*.yml",
+          "**/.github/workflows/*.yaml",
+        },
+
+        ["https://json.schemastore.org/gitlab-ci.json"] = {
+          ".gitlab-ci.yml",
+          ".gitlab-ci.yaml",
+          "**/.gitlab-ci.yml",
+          "**/.gitlab-ci.yaml",
+        },
+
+        -- Helm Chart.yaml
+        ["https://json.schemastore.org/chart.json"] = {
+          "Chart.yaml",
+          "**/Chart.yaml",
+        },
       },
-      format = {
-        enable = true, -- Auto-format YAML file
-      },
-      validate = true, -- Enable schema validation
-      completion = true, -- Enable autocoplete
+      trace = { server = "debug" },
     },
   },
 })
+--
+--
+--
+-- local schema_companion = require("schema-companion")
+--
+-- require("lspconfig").yamlls.setup(schema_companion.setup_client(
+--   schema_companion.adapters.yamlls.setup({
+--     sources = {
+--       -- keep normal yamlls / schemastore-backed schemas available
+--       schema_companion.sources.lsp.setup(),
+--
+--       -- optional manual "none" reset
+--       schema_companion.sources.none.setup(),
+--
+--       -- Kubernetes autodetection by file content
+--       schema_companion.sources.matchers.kubernetes.setup({
+--         version = "master",
+--       }),
+--
+--       -- extra manual schemas you want available in picker
+--       schema_companion.sources.schemas.setup({
+--         {
+--           name = "Docker Compose",
+--           uri = "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json",
+--         },
+--         {
+--           name = "GitHub Workflow",
+--           uri = "https://json.schemastore.org/github-workflow.json",
+--         },
+--         {
+--           name = "GitLab CI",
+--           uri = "https://json.schemastore.org/gitlab-ci.json",
+--         },
+--         {
+--           name = "Helm Chart",
+--           uri = "https://json.schemastore.org/chart.json",
+--         },
+--       }),
+--     },
+--   }),
+--   {
+--     settings = {
+--       yaml = {
+--         completion = true,
+--         validate = true,
+--         hover = true,
+--         format = { enable = true },
+--
+--         -- when using SchemaStore.nvim, disable yamlls built-in catalog
+--         schemaStore = {
+--           enable = false,
+--           url = "",
+--         },
+--
+--         -- still provide normal catalog schemas to yamlls
+--         schemas = require("schemastore").yaml.schemas(),
+--       },
+--     },
+--   }
+-- ))

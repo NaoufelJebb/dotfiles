@@ -10,6 +10,13 @@ return {
         desc = "ToggleTerm",
       },
       {
+        "<S-Esc>",
+        [[<C-\><C-n>]],
+        mode = "t",
+        noremap = true,
+        silent = true,
+      },
+      {
         "<leader>ttf",
         function()
           local count = vim.v.count1
@@ -84,6 +91,13 @@ return {
       direction = "horizontal" or "vertical" or "window" or "float",
       -- direction = "vertical",
       close_on_exit = true, -- close the terminal window when the process exits
+      on_open = function(t)
+        local opts = { buffer = t.bufnr }
+        vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", opts)
+        vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", opts)
+        vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", opts)
+        vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", opts)
+      end,
     },
   },
 }
